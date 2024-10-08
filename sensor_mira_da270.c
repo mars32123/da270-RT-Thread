@@ -6,6 +6,7 @@
 #define DBG_SECTION_NAME  "sensor.mira.da270"
 #define DBG_COLOR
 #include <rtdbg.h>
+#include <rtdevice.h>
 
 #define GRAVITY_EARTH (9.80665f)
 
@@ -31,7 +32,7 @@ static int8_t rt_i2c_write_reg(void *intf_ptr, uint8_t addr, uint8_t reg, uint8_
 
     if (rt_i2c_transfer(intf_ptr, msgs, 2) != 2)
     {
-        return -RT_ERROR;
+        return (int8_t)-RT_ERROR;
     }
 
     return RT_EOK;
@@ -54,7 +55,7 @@ static int8_t rt_i2c_read_reg(void *intf_ptr, uint8_t addr, uint8_t reg, uint8_t
 
     if (rt_i2c_transfer(intf_ptr, msgs, 2) != 2)
     {
-        return -RT_ERROR;
+        return (int8_t)-RT_ERROR;
     }
 
     return RT_EOK;
@@ -218,7 +219,7 @@ static rt_err_t _da270_set_power(rt_sensor_t sensor, rt_uint8_t power)
     return rslt;
 }
 
-static rt_size_t da270_fetch_data(struct rt_sensor_device *sensor, void *buf, rt_size_t len)
+static RT_SIZE_TYPE da270_fetch_data(struct rt_sensor_device *sensor, void *buf, rt_size_t len)
 {
     struct da270_dev *_da270_dev = sensor->parent.user_data;
     struct rt_sensor_data *data = buf;
