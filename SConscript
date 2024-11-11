@@ -5,8 +5,9 @@ src   = []
 cwd   = GetCurrentDir()
 
 # add da270 src files.
-src += Glob('sensor_mira_da270.c')
-src += Glob('libraries/da270.c')
+if GetDepend('PKG_PACKAGES_NAME_USING_SENSOR_V1'):
+    src += ['sensor_mira_da270.c']
+    src += ['libraries/da270.c']
 
 # add da270 include path.
 path  = [cwd, cwd + '/libraries']
